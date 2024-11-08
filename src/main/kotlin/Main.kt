@@ -60,19 +60,64 @@ fun App() {
                 }
             }
         }
+
         Text(
             text = "Publicaciones",
-            fontSize = TextUnit(value = 20f, type = TextUnitType.Sp)
+            fontSize = TextUnit(value = 20f, type = TextUnitType.Sp),
+            modifier = Modifier.padding(top = 10.dp)
         )
+
+        Column(
+            modifier = Modifier
+                .padding(15.dp)
+                .fillMaxWidth(),
+        ) {
+            posts.forEach { post ->
+                Column {
+                    Image(
+                        modifier = Modifier
+                            .size(200.dp)
+                            .clip(MaterialTheme.shapes.medium),
+                        painter = painterResource(resourcePath = post.postImage),
+                        contentDescription = "Publicación de ${post.authorName}"
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row {
+                        Image(
+                            modifier = Modifier
+                                .size(50.dp)
+                                .clip(CircleShape)
+                                .border(1.dp, Color.Gray, CircleShape),
+                            painter = painterResource(resourcePath = post.authorIcon),
+                            contentDescription = "Icono de ${post.authorName}"
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = post.authorName,
+                            style = MaterialTheme.typography.subtitle1,
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+                    }
+                    Text(
+                        text = post.description,
+                        style = MaterialTheme.typography.body2,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(top = 5.dp)
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
+            }
+        }
     }
 }
+
 
 
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "Fake Instagram",
-        state = rememberWindowState(width = 800.dp, height = 600.dp)
+        state = rememberWindowState(width = 800.dp, height = 800.dp)
     ) {
         App()
     }
