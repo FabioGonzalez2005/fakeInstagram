@@ -18,13 +18,11 @@ import androidx.compose.ui.window.rememberWindowState
 
 @Composable
 fun App() {
-    Row(
+    Column(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(vertical = 10.dp)
+            modifier = Modifier.padding(vertical = 10.dp)
         ) {
             Text(
                 text = "Fabio's Instagram",
@@ -34,113 +32,129 @@ fun App() {
                 text = "Historias",
                 fontSize = TextUnit(value = 20f, type = TextUnitType.Sp)
             )
+        }
 
-            Row(
+        Row(
+            modifier = Modifier
+                .padding(15.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            accounts.forEach { account ->
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.width(80.dp)
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, Color.Red, CircleShape),
+                        painter = painterResource(resourcePath = account.image),
+                        contentDescription = "Foto de ${account.name}"
+                    )
+                    Text(
+                        text = account.name,
+                        style = MaterialTheme.typography.subtitle2,
+                        color = Color.Black,
+                        modifier = Modifier.padding(top = 5.dp)
+                    )
+                }
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 10.dp)
+        ) {
+            Column(
                 modifier = Modifier
-                    .padding(15.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(15.dp)
+                    .weight(1f)
+                    .padding(vertical = 10.dp)
             ) {
-                accounts.forEach { account ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.width(80.dp)
-                    ) {
-                        Image(
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(CircleShape)
-                                .border(2.dp, Color.Red, CircleShape),
-                            painter = painterResource(resourcePath = account.image),
-                            contentDescription = "Foto de ${account.name}"
-                        )
-                        Text(
-                            text = account.name,
-                            style = MaterialTheme.typography.subtitle2,
-                            color = Color.Black,
-                            modifier = Modifier.padding(top = 5.dp)
-                        )
+                Text(
+                    text = "Publicaciones",
+                    fontSize = TextUnit(value = 30f, type = TextUnitType.Sp),
+                    modifier = Modifier.padding(top = 10.dp)
+                )
+
+                Column(
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .fillMaxWidth(),
+                ) {
+                    posts.forEach { post ->
+                        Column(
+                            modifier = Modifier.width(500.dp)
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .size(200.dp)
+                                    .clip(MaterialTheme.shapes.medium),
+                                painter = painterResource(resourcePath = post.postImage),
+                                contentDescription = "Publicación de ${post.authorName}"
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row {
+                                Image(
+                                    modifier = Modifier
+                                        .size(50.dp)
+                                        .clip(CircleShape)
+                                        .border(1.dp, Color.Gray, CircleShape),
+                                    painter = painterResource(resourcePath = post.authorIcon),
+                                    contentDescription = "Icono de ${post.authorName}"
+                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Text(
+                                    text = post.authorName,
+                                    style = MaterialTheme.typography.subtitle1,
+                                    modifier = Modifier.padding(top = 10.dp)
+                                )
+                            }
+                            Text(
+                                text = post.description,
+                                style = MaterialTheme.typography.body2,
+                                color = Color.Gray,
+                                modifier = Modifier.padding(top = 5.dp)
+                            )
+                            Spacer(modifier = Modifier.height(15.dp))
+                        }
                     }
                 }
             }
 
-            Text(
-                text = "Publicaciones",
-                fontSize = TextUnit(value = 20f, type = TextUnitType.Sp),
-                modifier = Modifier.padding(top = 10.dp)
-            )
-
             Column(
                 modifier = Modifier
-                    .padding(15.dp)
-                    .fillMaxWidth(),
+                    .weight(1f)
+                    .padding(vertical = 10.dp)
             ) {
-                posts.forEach { post ->
+                Text(
+                    text = "Sugerencias",
+                    fontSize = TextUnit(value = 30f, type = TextUnitType.Sp),
+                    modifier = Modifier.padding(top = 10.dp)
+                )
+                accounts.forEach { account ->
                     Column(
-                        modifier = Modifier.width(500.dp)
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth()
                     ) {
-                        Image(
-                            modifier = Modifier
-                                .size(200.dp)
-                                .clip(MaterialTheme.shapes.medium),
-                            painter = painterResource(resourcePath = post.postImage),
-                            contentDescription = "Publicación de ${post.authorName}"
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
                         Row {
                             Image(
                                 modifier = Modifier
                                     .size(50.dp)
                                     .clip(CircleShape)
                                     .border(1.dp, Color.Gray, CircleShape),
-                                painter = painterResource(resourcePath = post.authorIcon),
-                                contentDescription = "Icono de ${post.authorName}"
+                                painter = painterResource(resourcePath = account.image),
+                                contentDescription = "Icono de ${account.name}"
                             )
                             Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = post.authorName,
+                                text = account.name,
                                 style = MaterialTheme.typography.subtitle1,
-                                modifier = Modifier.padding(top = 10.dp)
+                                modifier = Modifier.padding(top = 12.dp)
                             )
                         }
-                        Text(
-                            text = post.description,
-                            style = MaterialTheme.typography.body2,
-                            color = Color.Gray,
-                            modifier = Modifier.padding(top = 5.dp)
-                        )
-                        Spacer(modifier = Modifier.height(15.dp))
-                    }
-                }
-            }
-        }
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(vertical = 10.dp)
-        ) {
-            accounts.forEach { account ->
-                Column(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .fillMaxWidth()
-                ) {
-                        Row {
-                        Image(
-                            modifier = Modifier
-                                .size(50.dp)
-                                .clip(CircleShape)
-                                .border(1.dp, Color.Gray, CircleShape),
-                            painter = painterResource(resourcePath = account.image),
-                            contentDescription = "Icono de ${account.name}"
-                        )
-                            Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = account.name,
-                            style = MaterialTheme.typography.subtitle1,
-                            modifier = Modifier.padding(top = 12.dp)
-                        )
                     }
                 }
             }

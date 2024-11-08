@@ -4,7 +4,7 @@ val accounts = listOf<Account>(
     Account("iriemdaoscuridad", "iriem.jpg"),
     Account("ferprogamer23", "fer.jpg"),
     Account("unaigatitagangster", "unai.jpg"),
-    Account("simongoofy", "simon.jpg")
+    Account("simongoofy", "simon.jpg"),
 )
 
 data class Post (val postImage: String, val authorIcon: String, val authorName: String, val description: String)
